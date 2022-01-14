@@ -3,10 +3,14 @@ const postController = require('../controllers/post.controller');
 const auth = require('../middleware/auth.middleware');
 
 // CRUD
-router.get('/', auth, postController.getAllPosts);
+router.get('/', postController.getAllPosts);
 router.post('/', postController.createPost);
 router.put('/:id', postController.updatePost);
 router.delete('/:id', postController.deletePost);
+
+// Like & unlike
+//router.post('/like-post/:id', postController.likePost);
+//router.patch('/unlike-post/:id', postController.unLikePost);
 
 
 
