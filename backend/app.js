@@ -1,6 +1,7 @@
 const express = require('express');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
+const commentRoutes = require('./routes/comment.routes');
 const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -30,7 +31,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
-
+app.use('/api/comment', commentRoutes)
 
 
 module.exports = app;
