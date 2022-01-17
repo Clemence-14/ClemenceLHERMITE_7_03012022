@@ -2,8 +2,9 @@ const router = require('express').Router();
 const postController = require('../controllers/post.controller');
 const auth = require('../middleware/auth.middleware');
 
-// CRUD
+// CRUD posts
 router.get('/', postController.getAllPosts);
+router.get('/:id', postController.getOnePost)
 router.post('/', postController.createPost);
 router.put('/:id', postController.updatePost);
 router.delete('/:id', postController.deletePost);
