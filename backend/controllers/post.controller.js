@@ -1,6 +1,7 @@
 const dbc = require('../config/db');
 const db = dbc.getDB();
 
+// Récupérer tout les posts de la base de données
 exports.getAllPosts =  (req, res ) => {
     const { id: userId } = req.headers;
     const sqlGetPosts = `SELECT * FROM posts = ${userId};`;
@@ -14,6 +15,21 @@ exports.getAllPosts =  (req, res ) => {
     });
 }
 
+// Obtenir un post de la base grâce à l'id
+exports.getOnePost = (req, res, next) => {
+  const { id: userId } = req.params;
+  const sqlGetUser = `SELECT * FROM posts WHERE posts.user_id = ${userId};`;
+  db.query(sqlGetUser, (err, result) => {
+    if (err) {
+      res.status(404).json({ err });
+      throw err;
+    }
+    delete result[0].user_password;
+    res.status(200).json(result);
+  });
+};
+
+// Création d'un post
 exports.createPost = (req, res ) => {
     try {
         const user = {
@@ -32,6 +48,7 @@ exports.createPost = (req, res ) => {
       }
 }
 
+// Mise à jour par l'utilisateur d'un post
 exports.updatePost = (req, res ) => {
   const { message } = req.body;
   const { id: userId } = req.params;
@@ -47,6 +64,7 @@ exports.updatePost = (req, res ) => {
   });
 }
 
+// Suppression d'un post
 exports.deletePost = (req, res ) => {
   const user_id = req.params.id
   const sql = `DELETE FROM posts WHERE user_id = ${user_id}`;
