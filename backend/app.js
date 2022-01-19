@@ -34,4 +34,8 @@ app.use('/api/post', postRoutes)
 app.use('/api/comment', commentRoutes)
 
 
+// Indique à express qu'il faut gérer la ressource images de manière statique à chaque fois qu'elle reçoit une requête vers la route /images
+app.use('/images', express.static(path.join(__dirname, 'images'))); 
+
+
 module.exports = app;
