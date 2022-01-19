@@ -36,6 +36,7 @@ exports.getAllUsers = (req, res, next) => {
     const { userName, email, password } = req.body;
     const { id: userId } = req.params;
     const sqlUpdateUser = `UPDATE users SET userName = "${userName}", email = "${email}", password="${password}" WHERE users.user_id = ${userId};`;
+    //const image = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
     db.query(sqlUpdateUser, (err, result) => {
       if (err) {
         res.status(404).json({ err });
