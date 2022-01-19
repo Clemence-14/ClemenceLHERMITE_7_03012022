@@ -35,6 +35,7 @@ exports.createPost = (req, res ) => {
         const user = {
           ...req.body,    };
         const sql = "INSERT INTO posts SET ?";
+        //const image = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
         const db = dbc.getDB();
         db.query(sql, user, (err, result) => {
           if (!result) {
@@ -52,7 +53,8 @@ exports.createPost = (req, res ) => {
 exports.updatePost = (req, res ) => {
   const { message } = req.body;
   const { id: userId } = req.params;
-  const sqlUpdateUser = `UPDATE posts SET message = "${message}"WHERE posts.user_id = ${userId}`
+  const sqlUpdateUser = `UPDATE posts SET message = "${message}"WHERE posts.user_id = ${userId}`;
+  //const image = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
   db.query(sqlUpdateUser, (err, result) => {
     if (err) {
       res.status(404).json({ err });
@@ -76,6 +78,8 @@ exports.deletePost = (req, res ) => {
     res.status(200).json({ message: "Post supprimé !" });
   });
 }
+
+
 
 
 
