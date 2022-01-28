@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SignInForm from "./SigniInForm";
+import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 
 const Log = ( props ) => {
