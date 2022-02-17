@@ -1,5 +1,5 @@
 import React from "react";
-import { Navlink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 // Modifications
 const LeftNav = () => {
@@ -7,17 +7,17 @@ const LeftNav = () => {
         <div className="left-nav-container">
             <div className="icons">
                 <div className="icons-bis">
-                    <Navlink to='/' exact activeClassName="active-left-nav">
-                    <i class="fas fa-home"></i>
-                    </Navlink>
+                    <NavLink to='/' exact activeClassName="active-left-nav">
+                    <img src="./img/house-solid.svg" alt="groupomania" />
+                    </NavLink>
                     <br />
-                    <Navlink to='/trending' exact activeClassName="active-left-nav">
-                    <i class="fa-solid fa-rocket"></i>
-                    </Navlink>
+                    <NavLink to='/trending' exact activeClassName="active-left-nav">
+                    <img src="./img/rocket-solid.svg" alt="rocket" />
+                    </NavLink>
                     <br />
-                    <Navlink to='/profil' exact activeClassName="active-left-nav">
-                    <i class="fa-solid fa-user"></i>
-                    </Navlink>
+                    <NavLink to='/profil' exact activeClassName="active-left-nav">
+                    <img src="./img/user-solid.svg" alt="utilisateur" />
+                    </NavLink>
                 </div>
             </div>
         </div>
