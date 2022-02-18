@@ -1,11 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts, updatePost } from "../../actions/post.actions";
 import { isEmpty } from "../Utils";
+import DeleteCard from "./Deletecard";
 import LikeButton from "./LikeButton";
 
 const Card = ({ post }) => {
     const [isLoading, setIsLoading] = useState(true);
+    const [isUpdated, setIsUpdated] = useState(false);
+    const [textUpdate, setTextUpdate] = useState(null);
     const userData = useSelector((state) => state.userReducer);
+    const dispatch = useDispatch();
+
+    const updateItem = () => {
+        if (textUpdate) {
+            dispatch(updatePost(post._id, textUpdate))
+        }
+        setIsUpdated(false);
+    }
 
     useEffect(() => {
         !isEmpty(userData[0]) && setIsLoading(false);
@@ -23,7 +35,8 @@ const Card = ({ post }) => {
                         !isEmpty(
                             userData[0] &&
                             userData.map((user) => {
-                                if (user._id === post.posterId) return user.picture;
+                                if (user._id === post.posterId) return user.picture
+                                else return null
                             })
                             .join("")
                         )
@@ -39,21 +52,59 @@ const Card = ({ post }) => {
                         !isEmpty(
                             userData[0] &&
                             userData.map((user) => {
-                                if (user._id === post.posterId) return user.pseudo;
+                                if (user._id === post.posterId) return user.pseudo
+                                else return null
                             })
                             .join("")
                         )
                     }
                                 </h3>
+                                <span>{dateParser(post.createdAt)}</span>
+            </div>
+            {isUpdated === false && <p>{post.message}</p>}
+            {isUpdated && (
+              <div className="update-post">
+                <textarea
+                  defaultValue={post.message}
+                  onChange={(e) => setTextUpdate(e.target.value)}
+                />
+                <div className="button-container">
+                  <button className="btn" onClick={updateItem}>
+                    Valider modification
+                  </button>
+                </div>
+              </div>
+            )}
+            {post.picture && (
+              <img src={post.picture} alt="card-pic" className="card-pic" />
+            )}
+            {post.video && (
+              <iframe
+                width="500"
+                height="300"
+                src={post.video}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={post._id}
+              ></iframe>
+            )}
+            {userData._id === post.posterId && (
+              <div className="button-container">
+                <div onClick={() => setIsUpdated(!isUpdated)}>
+                  <img src="./img/icons/edit.svg" alt="edit" />
+                </div>
+                <DeleteCard id={post._id} />
+              </div>
+            )}
                                 <div className="card-footer">
                                     <div className="comment-icon">
-                                        <img src="./img/icons/message1.svg" alt="comment" />
+                                        <img onClick={() => setShowComments(!showComments)} src="./img/icons/message1.svg" alt="comment" />
                                         <span>{post.comments.length}</span>
                                     </div>
                                     <LikeButton post={post} />
                                     <img src="./img/icons/share.svg" alt="share" />
-                                </div>
-                            </div>
+                                    </div>
                         </div>
                     </div>
                     </>
