@@ -11,11 +11,16 @@ import rootReducer from './reducers';
 // Dev tools
 import {composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter } from 'react-router-dom';
+import { getUser } from './actions/user.actions';
+import { getPosts } from './actions/post.actions';
 
 
 const store = createStore(
   rootReducer, composeWithDevTools(applyMiddleware(thunk))
 )
+
+store.dispatch((getUser));
+store.dispatch((getPosts));
 
 ReactDOM.render(
   <React.StrictMode>
