@@ -8,13 +8,13 @@ export default function userReducer(state = initialState, action) {
             return action.payload
             case UPLOAD_PICTURE:
                 return {
-                    ... state,
+                    ...state,
                     picture: action.payload,
                 };
                 case UPDATE_BIO:
                     return {
-                        ...state,
-                        bio: action.payload
+                    ...state,
+                    bio: action.payload
                     }
             default:
                 return state;
