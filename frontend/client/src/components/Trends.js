@@ -19,7 +19,7 @@ const Trends = () => {
             sortedArray.length = 3;
             dispatch(getTrends(sortedArray));
         }
-    }, [posts])
+    }, [posts, dispatch])
      
     return (
         <div className="trending-container">
