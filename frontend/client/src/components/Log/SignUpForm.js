@@ -26,6 +26,24 @@ const SignUpForm = () => {
 
             if (!terms.checked)
             termsError.innerHTML = "Veuillez valider les conditions générales"
+        } else {
+            await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}api/user/register`,
+                data: {
+                    pseudo,
+                    email,
+                    password
+                }
+            })
+            .then((res) => {
+                if (res.data.errors) {
+                    pseudoError.innerHTML = res.data.errors.pseudo;
+                    emailError.innerHTML = res.data.errors.email;
+                    passwordError.innerHTML = res.data.errors.password;
+                }
+            })
+            .catch((err) => console.log(err));
         }
     }
     return (
