@@ -14,12 +14,6 @@ const NewPostForm = () => {
     const error = useSelector((state) => state.errorReducer.postError);
     const dispatch = useDispatch();
 
-const handlePicture = (e) => {
-    setPostPicture(URL.createObjectURL(e.target.files[0]));
-    setFile(e.target.files[0]);
-    setVideo('');
-    };
-
 const handlePost = async () => {
     if (message || postPicture || video ) {
         const data = new FormData();
@@ -27,15 +21,22 @@ const handlePost = async () => {
         data.append('message', message);
         if (file) data.append("file", file);
         data.append('video', video);
-
+    
         await dispatch(addPost(data));
         dispatch(getPosts());
         cancelPost();
-
+    
     } else {
         alert("Veuillez écrire un message")
     }
+};
+
+const handlePicture = (e) => {
+    setPostPicture(URL.createObjectURL(e.target.files[0]));
+    setFile(e.target.files[0]);
+    setVideo('');
     };
+
 
 const cancelPost = () => {
         setMessage('');
@@ -44,21 +45,22 @@ const cancelPost = () => {
         setFile('');
     };
 
-const handleVideo = () => {
-        let findLink = message.split(" ");
-        for (let i = 0; i < findLink.length; i++) {
-            if (findLink[i].includes('https://www.yout') || findLink[i].includes('https://yout')) {
-                let embed = findLink[i].replace('watch?v=', "embed/");
-                setVideo(embed.split('&')[0]);
-                findLink.splice(i, 1);
-                setMessage(findLink.join(" "));
-                setPostPicture('');
-            }
-        }
-    }
 
     useEffect(() => {
         if (!isEmpty(userData)) setIsLoading(false);
+
+        const handleVideo = () => {
+            let findLink = message.split(" ");
+            for (let i = 0; i < findLink.length; i++) {
+                if (findLink[i].includes('https://www.yout') || findLink[i].includes('https://yout')) {
+                    let embed = findLink[i].replace('watch?v=', "embed/");
+                    setVideo(embed.split('&')[0]);
+                    findLink.splice(i, 1);
+                    setMessage(findLink.join(" "));
+                    setPostPicture('');
+                }
+            }
+        }
         handleVideo();
     }, [userData, message, video]);
 
